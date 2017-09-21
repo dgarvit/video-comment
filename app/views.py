@@ -2,7 +2,7 @@
 from __future__ import unicode_literals
 from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import render, HttpResponse, redirect
-from .forms import UploadFileForm
+from .forms import VideoForm
 
 def login_view(request):
 	try:
@@ -27,16 +27,15 @@ def logout_view(request):
 
 def upload(request):
 	if request.method == 'POST':
-		form = UploadFileForm(request.POST, request.FILES)
+		form = VideoForm(request.POST, request.FILES)
 		if form.is_valid():
-			#handle_uploaded_file(request.FILES['file'])
+			form.save()
 			return HttpResponse('Success')
-
 		else:
 			return render(request, 'app/upload.html', {'form': form})
 
 
 	else:
-		form = UploadFileForm()
+		form = VideoForm()
 
 		return render(request, 'app/upload.html', {'form': form})

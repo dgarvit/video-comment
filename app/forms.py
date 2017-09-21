@@ -1,10 +1,11 @@
 from django import forms
 from validators import MimetypeValidator
+from .models import Video
 
-class UploadFileForm(forms.Form):
-	title = forms.CharField(max_length=50)
-	file = forms.FileField(
-		widget=forms.FileInput(attrs={'accept':'video/mp4'}),
-		validators=[MimetypeValidator('video/mp4')],
-		help_text="Upload a mp4 file"
-		)
+class VideoForm(forms.ModelForm):
+	class Meta:
+		model = Video
+		fields = ('title', 'file')
+		widgets = {
+			'file': forms.FileInput(attrs={'accept':'video/mp4'}),
+		}
