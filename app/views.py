@@ -3,6 +3,7 @@ from __future__ import unicode_literals
 from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import render, HttpResponse, redirect
 from .forms import VideoForm
+from .models import Video
 
 def login_view(request):
 	try:
@@ -39,3 +40,8 @@ def upload(request):
 		form = VideoForm()
 
 		return render(request, 'app/upload.html', {'form': form})
+
+
+def index(request):
+	videos = Video.objects.all()
+	return render(request, 'app/index.html', {'videos': videos})
