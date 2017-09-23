@@ -1,6 +1,6 @@
 {% for video in videos %}
 	<div>
-		<b>{{ video.title }}</b><br>
+		<b>{{ video.title|escape }}</b><br>
 		<video width="320" height="240" controls autoplay>
 			<source src="{{ video.file.url }}" type="video/mp4">
 		</video>

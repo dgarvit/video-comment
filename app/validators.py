@@ -11,4 +11,4 @@ class MimetypeValidator(object):
 			if not mime in self.mimetypes:
 				raise ValidationError('%s is not an acceptable file type' % value)
 		except AttributeError as e:
-			raise ValidationError('This value could not be validated for file type' % value)
+			raise ValidationError('This value could not be validated for file type' % value)	
