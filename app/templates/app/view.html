@@ -1,0 +1,7 @@
+<div>
+	<b>{{ video.title|escape }}</b><br>
+	{{ video.user }}<br>
+	<video width="320" height="240" controls>
+		<source src="{{ video.file.url }}" type="video/mp4">
+	</video>
+</div>

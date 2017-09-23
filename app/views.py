@@ -8,6 +8,8 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 
 def login_view(request):
+	if request.user.is_authenticated:
+		return redirect('index')
 	try:
 		username = request.POST['username']
 		password = request.POST['password']
@@ -15,18 +17,18 @@ def login_view(request):
 
 		if user is not None:
 			login(request, user)
-			return HttpResponse("Hey!" + user.username);
+			return redirect(index)
 
 		else:
-			return HttpResponse("Invalid user.")
+			return render(request, 'app/login.html', {'error' : True})
 
 	except:
 		return render(request, 'app/login.html')
 
 def logout_view(request):
 	logout(request)
-	return redirect(login)
-	
+	return redirect('index')
+
 
 @login_required
 def upload(request):
@@ -68,3 +70,8 @@ def signup(request):
 			profile.save()
 			return HttpResponse("Success")
 	return render(request, 'app/signup.html', {'form': form})
+
+
+def view(request, video_id):
+	video = Video.objects.get(id=video_id)
+	return render(request, 'app/view.html', {'video': video})

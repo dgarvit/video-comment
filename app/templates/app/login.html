@@ -5,10 +5,18 @@
 </head>
 <body>
 	<h2>Login</h2>
+	{% if error %}
+		<div>Invalid username or password.</div>
+	{% endif %}
 	<form method="post">
 		{% csrf_token %}
-		{{ form.as_p }}
+		<p><label for="id_username">Username:</label> <input type="text" name="username" autofocus required id="id_username" maxlength="254" /></p>
+<p><label for="id_password">Password:</label> <input type="password" name="password" required id="id_password" /></p>
 		<button type="submit">Login</button>
 	</form>
+	<div>
+		New User?
+		<a href="{% url 'signup' %}">Sign Up</a>
+	</div>
 </body>
 </html>
