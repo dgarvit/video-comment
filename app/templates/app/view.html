@@ -3,12 +3,15 @@
 <html>
 <head>
 	<title>{{ video.title|escape }}</title>
+	<script  src="https://code.jquery.com/jquery-3.2.1.js" integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE=" crossorigin="anonymous"></script>
+	<link href="http://vjs.zencdn.net/6.2.7/video-js.css" rel="stylesheet">
+
 </head>
 <body>
 	<div>
 	<b>{{ video.title|escape }}</b><br>
 	{{ video.user }}<br>
-	<video width="320" height="240" controls autoplay>
+	<video class="video-js" width="320" height="240" controls autoplay>
 		<source src="{{ video.file.url }}" type="video/mp4">
 	</video>
 	
@@ -18,8 +21,20 @@
 		</form>
 	</div>
 
-	<video id="webcam" autoplay controls></video>
+	<video id="webcam" autoplay controls onpause="uploadCanvasData()"></video>
 	<script src="{% static 'js/view.js' %}"></script>
+	<script type="text/javascript">
+		/*var file = $('#webcam').get(0).files.item(0); // instanceof File
+		$.ajax({
+		  type: 'POST',
+		  url: 'upload.php',
+		  data: file,
+		  contentType: 'video/mp4', // set to whatever you like
+		  processData: false
+		});
+		console.log(file);*/
+
+	</script>
 	</div>
 </body>
 </html>
