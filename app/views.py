@@ -2,7 +2,7 @@
 from __future__ import unicode_literals
 from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import render, HttpResponse, redirect
-from .forms import VideoForm
+from .forms import VideoForm, CommentForm
 from .models import Video, Profile
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
@@ -74,4 +74,6 @@ def signup(request):
 
 def view(request, video_id):
 	video = Video.objects.get(id=video_id)
-	return render(request, 'app/view.html', {'video': video})
+	form = CommentForm()
+	return render(request, 'app/view.html', {'video': video,
+											 'form':  form})

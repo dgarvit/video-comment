@@ -1,7 +1,24 @@
-<div>
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+	<title>{{ video.title|escape }}</title>
+</head>
+<body>
+	<div>
 	<b>{{ video.title|escape }}</b><br>
 	{{ video.user }}<br>
-	<video width="320" height="240" controls>
+	<video width="320" height="240" controls autoplay>
 		<source src="{{ video.file.url }}" type="video/mp4">
 	</video>
-</div>
+	
+	<div>
+		<form method="post" action="{% url 'view' video.id %}">
+			{{ form.as_p }}
+		</form>
+	</div>
+
+	<script src="{% static 'js/view.js' %}"></script>
+	</div>
+</body>
+</html>

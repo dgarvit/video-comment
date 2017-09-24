@@ -1,6 +1,6 @@
 {% for video in videos %}
 	<div>
-		<b><a href="view/{{video.id}}">{{ video.title|escape }}</a></b><br>
+		<b><a href="{% url 'view' video.id %}">{{ video.title|escape }}</a></b><br>
 		{{ video.user }}<br>
 		<video width="320" height="240" controls>
 			<source src="{{ video.file.url }}" type="video/mp4">
