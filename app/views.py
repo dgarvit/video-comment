@@ -2,8 +2,9 @@
 from __future__ import unicode_literals
 from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import render, HttpResponse, redirect
+from django.http import JsonResponse
 from .forms import VideoForm, CommentForm
-from .models import Video, Profile
+from .models import Video, Profile, Comment
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 
@@ -73,7 +74,18 @@ def signup(request):
 
 
 def view(request, video_id):
+	if request.method == 'POST':
+		text = request.POST['comment']
+		time = int(float(request.POST['time']))
+		print type(time)
+		video = Video.objects.get(id=video_id)
+		user = request.user
+		comment = Comment(comment=text, time=time, video=video, user=user)
+		comment.save()
+		return HttpResponse('Success')
+
 	video = Video.objects.get(id=video_id)
 	form = CommentForm()
-	return render(request, 'app/view.html', {'video': video,
-											 'form':  form})
+	return render(request, 'app/view.html', 
+		{'video': video,
+		'form':  form})

@@ -29,7 +29,7 @@ class Comment(models.Model):
 	comment = models.TextField()
 	user = models.ForeignKey(User, on_delete=models.CASCADE)
 	file = models.FileField(blank=True)
-	time = models.DecimalField(max_digits=12, decimal_places=6)
+	time = models.IntegerField()
 
 	def __str__(self):
 		return (self.video.title[:20] + '/' + self.user.username)
