@@ -3,6 +3,7 @@
 <html>
 <head>
 	<script src="{% static 'js/jQuery.js' %}"></script>
+	<link rel="stylesheet" type="text/css" href="{% static 'css/view.css' %}">
 	{% csrf_token %}
 	<script>
 		$(document).ready(function(){
@@ -27,10 +28,16 @@
 						'time' : time
 					},
 					function(data, status) {
-
+						$('#comment')[0].value = "";
 					});
-			});			
+			});	
 		});
+
+		function skipTo(time) {
+			var video = document.getElementById('main');
+			video.currentTime = time;
+			video.play();
+			}
 	</script>
 </head>
 <body>
@@ -39,17 +46,37 @@
 		{{ video.user }}<br>
 		<video id="main" width="320" height="240" controls autoplay>
 			<source src="{{ video.file.url }}" type="video/mp4">
-			</video>
-			{% if user.is_authenticated %}
-			<div>
-				<textarea rows="4" cols="50" id="comment" placeholder="Write a comment..."></textarea><br>
-				<button id="post">Post</button>
-			</div>
-			{% else %}
-			<div>
-				<a href="{% url 'login' %}">Login</a> to post comments.
-			</div>
-			{% endif %}
+		</video>
+		{% if user.is_authenticated %}
+		<div>
+			<textarea rows="4" cols="50" id="comment" placeholder="Write a comment..."></textarea><br>
+			<button id="post">Post</button>
+		</div>
+		{% else %}
+		<div>
+			<a href="{% url 'login' %}">Login</a> to post comments.
+		</div>
+		{% endif %}
+
+
+		{% block comments %}
+		<div>
+		<div id="comment_title"><b>Comments:</b></div>
+		<div>
+			{% for comment in comments %}
+				<div class="comment_content">
+					<div>
+						<div class="comment_user">{{ comment.user }}</div>
+						<div>{{ comment.comment|escape }}</div>
+						</div>
+						<div class="comment_time" onclick="skipTo({{ comment.time }})">
+							Time: {{ comment.time }}
+						</div>
+				</div>
+			{% endfor %}
+		</div>
+		</div>
+		{% endblock %}
 	</div>
 </body>
 </html>

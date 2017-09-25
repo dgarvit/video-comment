@@ -2,7 +2,6 @@
 from __future__ import unicode_literals
 from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import render, HttpResponse, redirect
-from django.http import JsonResponse
 from .forms import VideoForm, CommentForm
 from .models import Video, Profile, Comment
 from django.contrib.auth.decorators import login_required
@@ -86,6 +85,8 @@ def view(request, video_id):
 
 	video = Video.objects.get(id=video_id)
 	form = CommentForm()
+	comments = Comment.objects.filter(video=video).order_by('time')
 	return render(request, 'app/view.html', 
 		{'video': video,
-		'form':  form})
+		'form':  form,
+		'comments': comments})

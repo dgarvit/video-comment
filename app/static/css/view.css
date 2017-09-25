@@ -1,0 +1,23 @@
+#comment_title {
+	margin-top: 20px;
+	font-size: 25px;
+}
+
+.comment_content {
+	margin-top: 8px; 
+	margin-bottom: 8px;
+	margin-left: 5px;
+	font-size: 16px;
+}
+
+.comment_user {
+	float: left;
+	margin-right: 8px;
+	color: navy;
+	font-weight: bold;
+}
+
+.comment_time {
+	color: gray;
+	font-size: 14px;
+}
