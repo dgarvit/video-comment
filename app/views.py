@@ -8,6 +8,7 @@ from .serializers import CommentSerializer
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 from django.http import JsonResponse
+from rest_framework.parsers import JSONParser
 
 def login_view(request):
 	if request.user.is_authenticated:
@@ -77,9 +78,9 @@ def signup(request):
 def view(request, video_id):
 	if request.method == 'POST':
 		try:
-			text = request.POST['comment']
-			time = int(float(request.POST['time']))
-			print type(time)
+			data = JSONParser().parse(request)
+			text = data['comment']
+			time = int(data['time'])
 			video = Video.objects.get(id=video_id)
 			user = request.user
 			comment = Comment(comment=text, time=time, video=video, user=user)

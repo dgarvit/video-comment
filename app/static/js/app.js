@@ -4,7 +4,9 @@
 	.controller('ViewController', ['$scope', '$http', '$location', function(a, b, c){
 		a.comments = [];
 
+		var r = this;
 		this.postReq = function(url, params, callback) {
+			console.log(params);
 			b.post(url, params)
 			.then(function(response) {
 				console.log(response);
@@ -13,14 +15,22 @@
 		}
 
 		this.getComments = function() {
-			var self = this;
-			self.postReq(c.url(), {}, function(data) {
+			r.postReq(c.url(), {}, function(data) {
 				a.comments = data.slice();
 			});
 		};
 
-		this.postComment = function() {
-			comment = document.getElementById('comment').value;
+		a.postComment = function() {
+			var comment = document.getElementById('comment').value;
+			var time = document.getElementById('main').currentTime;
+			q = b.post(c.url(), {
+				'comment' : comment,
+				'time': time
+			})
+			.then(function(response) {
+				a.comments = response.data;
+				document.getElementById('comment').value = "";
+			});
 		};
 
 		a.skipTo = function(time) {

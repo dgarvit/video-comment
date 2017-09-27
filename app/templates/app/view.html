@@ -19,7 +19,7 @@
 		{% if user.is_authenticated %}
 		<div>
 			<textarea rows="4" cols="50" id="comment" placeholder="Write a comment..."></textarea><br>
-			<button id="post">Post</button>
+			<button id="post" ng-click="postComment()">Post</button>
 		</div>
 		{% else %}
 		<div>
