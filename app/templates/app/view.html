@@ -5,90 +5,11 @@
 	<title>{{ video.title|escape }}</title>
 	<!--<script src="{% static 'js/jQuery.js' %}"></script>-->
 	<script src="{% static 'js/angular.js' %}"></script>
+	<script src="{% static 'js/app.js' %}"></script>
 	<link rel="stylesheet" type="text/css" href="{% static 'css/view.css' %}">
-	{% csrf_token %}
-	<script>
-		$(document).ready(function(){
-			var csrftoken = jQuery("[name=csrfmiddlewaretoken]").val();
-			function csrfSafeMethod(method) {
-    			return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
-			}
-
-			$.ajaxSetup({
-    			beforeSend: function(xhr, settings) {
-        			if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
-            			xhr.setRequestHeader("X-CSRFToken", csrftoken);
-        			}
-    			}
-			});
-
-			video = document.getElementById('main');
-			var comments = [];
-
-			$.post("{% url 'view' video.id %}", {},
-				function(data, status) {
-					comments = data.slice();
-					comment_box = document.getElementById('comment_box');
-					var fill = "";
-					for(var i = 0; i < comments.length; i++) {
-						fill += "<div class='comment_content'>\
-					<div>\
-						<div class='comment_user'>" + comments[i].user + "</div>\
-						<div>"+ comments[i].comment + "</div>\
-					</div>\
-					<div class='comment_time' onclick='skipTo(" + comments[i].time + ")'>\
-						Time:" + comments[i].time +"s\
-					</div>\
-				</div>";
-					}
-					comment_box.innerHTML = fill;
-
-					/*comments.forEeach(function(comment) {
-						console.log(comment);
-					});	*/
-				});
-
-			//console.log(comments);
-
-		/*	function pauseVideo() {
-				for (var i = 0; i < times.length; i++) {
-					if (Math.floor(this.currentTime) == times[i]) {
-						this.pause();
-						document.getElementById('time_comment').innerHTML = "";
-						this.currentTime += 0.5;
-						console.log(comment);
-					}
-				}
-			}
-
-			video.addEventListener("timeupdate", pauseVideo);*/
-
-
-			$('#post').click(function(){
-				comment = $('#comment')[0].value;
-				time = $('#main')[0].currentTime;
-				console.log(time);
-				$.post("{% url 'view' video.id %}",
-					{
-						'comment' : comment,
-						'time' : time
-					},
-					function(data, status) {
-						$('#comment')[0].value = "";
-						comment = data;
-					});
-			});	
-		});
-
-		function skipTo(time) {
-			var video = document.getElementById('main');
-			video.currentTime = time;
-			video.play();
-		}
-	</script>
 </head>
-<body>
-	<div>
+<body ng-app="View">
+	<div ng-controller="ViewController">
 		<b>{{ video.title|escape }}</b><br>
 		{{ video.user }}<br>
 		<video id="main" width="320" height="240" controls autoplay>
