@@ -4,8 +4,10 @@ from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import render, HttpResponse, redirect
 from .forms import VideoForm, CommentForm
 from .models import Video, Profile, Comment
+from .serializers import CommentSerializer
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
+from django.http import JsonResponse
 
 def login_view(request):
 	if request.user.is_authenticated:
@@ -73,15 +75,27 @@ def signup(request):
 
 
 def view(request, video_id):
-	if request.method == 'POST':
-		text = request.POST['comment']
-		time = int(float(request.POST['time']))
-		print type(time)
+	'''if request.method == 'GET':
 		video = Video.objects.get(id=video_id)
-		user = request.user
-		comment = Comment(comment=text, time=time, video=video, user=user)
-		comment.save()
-		return HttpResponse('Success')
+		comments = Comment.objects.filter(video=video).order_by('time')
+		serializer = CommentSerializer(comments, many=True)
+		return JsonResponse(serializer.data, safe=False)'''
+
+	if request.method == 'POST':
+		try:
+			text = request.POST['comment']
+			time = int(float(request.POST['time']))
+			print type(time)
+			video = Video.objects.get(id=video_id)
+			user = request.user
+			comment = Comment(comment=text, time=time, video=video, user=user)
+			comment.save()
+		except:
+			pass;
+		video = Video.objects.get(id=video_id)
+		comments = Comment.objects.filter(video=video).order_by('time')
+		serializer = CommentSerializer(comments, many=True)
+		return JsonResponse(serializer.data, safe=False)
 
 	video = Video.objects.get(id=video_id)
 	form = CommentForm()
