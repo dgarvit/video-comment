@@ -75,12 +75,6 @@ def signup(request):
 
 
 def view(request, video_id):
-	'''if request.method == 'GET':
-		video = Video.objects.get(id=video_id)
-		comments = Comment.objects.filter(video=video).order_by('time')
-		serializer = CommentSerializer(comments, many=True)
-		return JsonResponse(serializer.data, safe=False)'''
-
 	if request.method == 'POST':
 		try:
 			text = request.POST['comment']
@@ -100,7 +94,8 @@ def view(request, video_id):
 	video = Video.objects.get(id=video_id)
 	form = CommentForm()
 	comments = Comment.objects.filter(video=video).order_by('time')
-	return render(request, 'app/view.html', 
-		{'video': video,
+	return render(request, 'app/view.html',
+	{
+	 	'video': video,
 		'form':  form,
-		'comments': comments})
+	})

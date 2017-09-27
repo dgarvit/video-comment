@@ -31,18 +31,18 @@
 		{% block comments %}
 		<div>
 			<div id="comment_title"><b>Comments:</b></div>
-			<div id="comment_box">
-		<!--	{% for comment in comments %}
+			<div id="comment_box" ng-repeat="comment in comments">
+				{% verbatim %}
 				<div class="comment_content">
 					<div>
-						<div class="comment_user">{{ comment.user }}</div>
-						<div>{{ comment.comment|escape }}</div>
+						<div class="comment_user">{{ comment.user.username }}</div>
+						<div>{{ comment.comment }}</div>
 					</div>
-					<div class="comment_time" onclick="skipTo({{ comment.time }})">
+					<div class="comment_time" ng-click="skipTo(comment.time)">
 						Time: {{ comment.time }}s
 					</div>
 				</div>
-			{% endfor %} -->
+				{% endverbatim %}
 			</div>
 		</div>
 		{% endblock %}
