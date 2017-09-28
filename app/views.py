@@ -35,7 +35,8 @@ def logout_view(request):
 
 @login_required
 def upload(request):
-	profile = Profile.objects.get(user=request.user)
+	#profile = Profile.objects.get(user=request.user)
+	profile, created = Profile.objects.get_or_create(user = request.user,)
 	if profile.is_teacher == False:
 		return render(request, 'app/not_teacher.html')
 

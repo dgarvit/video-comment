@@ -1,0 +1,11 @@
+NAME:
+   set-env - Set an env variable for an app
+
+USAGE:
+   cf set-env APP_NAME ENV_VAR_NAME ENV_VAR_VALUE
+
+ALIAS:
+   se
+
+SEE ALSO:
+   apps, env, restart, set-running-environment-variable-group, set-staging-environment-variable-group, unset-env

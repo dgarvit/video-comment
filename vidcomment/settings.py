@@ -25,7 +25,9 @@ SECRET_KEY = 'hkynjl&#i0e_td$yd&twbjx0_a+k)+$#s1#3y-$v3%a(%3u=rk'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['videocomment.eu-gb.mybluemix.net']
+
+PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
 
 
 # Application definition
@@ -80,12 +82,14 @@ WSGI_APPLICATION = 'vidcomment.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
 
-DATABASES = {
+'''DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
-}
+}'''
+
+
 
 
 # Password validation
@@ -139,9 +143,11 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
 STATIC_URL = '/static/'
-
+STATIC_ROOT = os.path.join(PROJECT_ROOT, 'staticfiles')
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 LOGIN_REDIRECT_URL = 'index'
 LOGIN_URL = '/app/login'
+
+STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
