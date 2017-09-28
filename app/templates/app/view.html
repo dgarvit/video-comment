@@ -28,8 +28,10 @@
 		<button id="popup" ng-click="popUp()">Disable Popups</button>
 		{% if user.is_authenticated %}
 		<div>
-			<textarea rows="4" cols="50" id="comment" placeholder="Write a comment..."></textarea><br>
+			<textarea rows="4" cols="50" id="comment" placeholder="Write a comment..."></textarea>
+			<video id="webcam" autoplay controls width="700" height="200"></video> <br>
 			<button id="post" ng-click="postComment()">Post</button>
+			<button id="record" >Record</button>
 		</div>
 		{% else %}
 		<div>
