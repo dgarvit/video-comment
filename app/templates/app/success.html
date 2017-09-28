@@ -3,7 +3,8 @@
 <html>
 <head>
 	<title>Upload</title>
-	<link rel="stylesheet" type="text/css" href="{% static 'css/view.css' %}">
+		<link rel="stylesheet" type="text/css" href="{% static 'css/view.css' %}">
+
 </head>
 <body>
 	<ul class="topnav">
@@ -13,13 +14,10 @@
 		<li class="right"><a href="{% url 'logout' %}">Logout</a></li>
 		{% else %}
 		<li class="right"><a href="{% url 'signup' %}">Signup</a></li>
-		<li class="right"><a href="{% url 'login' %}">Login</a></li>
+		<li class="right"><a class="active" href="{% url 'login' %}">Login</a></li>
 		{% endif %}
 	</ul><br><br><br>
-	<form method="post" enctype="multipart/form-data">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <input type="submit" value="Submit" />
-	</form>
+
+	<h1>Success!</h1>
 </body>
 </html>

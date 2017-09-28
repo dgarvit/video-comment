@@ -3,23 +3,21 @@
 <html>
 <head>
 	<title>Upload</title>
-	<link rel="stylesheet" type="text/css" href="{% static 'css/view.css' %}">
+		<link rel="stylesheet" type="text/css" href="{% static 'css/view.css' %}">
+
 </head>
 <body>
-	<ul class="topnav">
+		<ul class="topnav">
 		<li><a href="{% url 'index' %}">Home</a></li>
 		{% if user.is_authenticated %}
 		<li><a class="active" href="{% url 'upload' %}">Upload</a></li>
 		<li class="right"><a href="{% url 'logout' %}">Logout</a></li>
 		{% else %}
 		<li class="right"><a href="{% url 'signup' %}">Signup</a></li>
-		<li class="right"><a href="{% url 'login' %}">Login</a></li>
+		<li class="right"><a class="active" href="{% url 'login' %}">Login</a></li>
 		{% endif %}
 	</ul><br><br><br>
-	<form method="post" enctype="multipart/form-data">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <input type="submit" value="Submit" />
-	</form>
+
+	<h2>You are not a teacher.</h2>
 </body>
 </html>

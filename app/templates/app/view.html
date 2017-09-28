@@ -3,19 +3,29 @@
 <html>
 <head>
 	<title>{{ video.title|escape }}</title>
-	<!--<script src="{% static 'js/jQuery.js' %}"></script>-->
 	<script src="{% static 'js/angular.js' %}"></script>
 	<script src="{% static 'js/app.js' %}"></script>
 	<link rel="stylesheet" type="text/css" href="{% static 'css/view.css' %}">
 </head>
 <body ng-app="View">
+	<ul class="topnav">
+		<li><a href="{% url 'index' %}">Home</a></li>
+		{% if user.is_authenticated %}
+		<li><a href="{% url 'upload' %}">Upload</a></li>
+		<li class="right"><a href="{% url 'logout' %}">Logout</a></li>
+		{% else %}
+		<li class="right"><a href="{% url 'signup' %}">Signup</a></li>
+		<li class="right"><a href="{% url 'login' %}">Login</a></li>
+		<li><a href="Home">Home</a></li>
+		{% endif %}
+	</ul><br><br><br>
 	<div ng-controller="ViewController">
-		<b>{{ video.title|escape }}</b><br>
-		{{ video.user }}<br>
-		<video id="main" width="320" height="240" controls autoplay>
+		<b style="font-size: 20px;">{{ video.title|escape }}</b><br>
+		{{ video.user|escape }}<br>
+		<video id="main" width="auto" height="auto" controls autoplay>
 			<source src="{{ video.file.url }}" type="video/mp4">
-		</video>
-		<div id="time_comment"></div>
+		</video><br>
+		<button id="popup" ng-click="popUp()">Disable Popups</button>
 		{% if user.is_authenticated %}
 		<div>
 			<textarea rows="4" cols="50" id="comment" placeholder="Write a comment..."></textarea><br>
@@ -29,6 +39,7 @@
 
 
 		{% block comments %}
+		<br><br>
 		<div>
 			<div id="comment_title"><b>Comments:</b></div>
 			<div id="comment_box" ng-repeat="comment in comments">

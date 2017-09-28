@@ -37,7 +37,7 @@ def logout_view(request):
 def upload(request):
 	profile = Profile.objects.get(user=request.user)
 	if profile.is_teacher == False:
-		return HttpResponse('Not a teacher')
+		return render(request, 'app/not_teacher.html')
 
 	if request.method == 'POST':
 		form = VideoForm(request.POST, request.FILES)
@@ -45,7 +45,7 @@ def upload(request):
 			video = form.save(commit=False)
 			video.user = request.user
 			video.save()
-			return HttpResponse('Success')
+			return render(request, 'app/success.html')
 		else:
 			return render(request, 'app/upload.html', {'form': form})
 
@@ -71,7 +71,7 @@ def signup(request):
 			user = form.save(commit=False)
 			profile = Profile(user=user)
 			profile.save()
-			return HttpResponse("Success")
+			return redirect('/app/login')
 	return render(request, 'app/signup.html', {'form': form})
 
 
@@ -94,7 +94,6 @@ def view(request, video_id):
 
 	video = Video.objects.get(id=video_id)
 	form = CommentForm()
-	comments = Comment.objects.filter(video=video).order_by('time')
 	return render(request, 'app/view.html',
 	{
 	 	'video': video,
