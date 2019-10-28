@@ -1,6 +1,6 @@
 applications:
 - name: videocomment
 memory: 256M
-# This is command provided by cf -c option
+# This command is provided by cf -c option
 command: bash ./run.sh
 buildpack: https://github.com/cloudfoundry/python-buildpack
