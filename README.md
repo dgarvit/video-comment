@@ -4,3 +4,6 @@ A new way of commenting on videos, aimed for lectures. Teachers can upload lectu
 
 
 As the video seeks to the time of the comment, the video pauses and the comment pops up. In case of lectures, students can then point out what part they exactly have a problem in by posting the video at that very time.
+
+
+Try it out at: http://videocomment.eu-gb.mybluemix.net/
